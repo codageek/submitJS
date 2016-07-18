@@ -1,0 +1,34 @@
+<button onclick="getValueYes<?php echo $i; ?>();" id="yes<?php echo $i; ?>" class="btn btn-success btn-small"><i class="icon-ok"></i></button>&nbsp;
+<button onclick="getValueNo<?php echo $i; ?>();" id="no<?php echo $i; ?>" class="btn btn-danger btn-small" data-toggle="tooltip" data-placement="left" title="<?php echo $row[reason]; ?>"><i class="icon-remove"></i></button>
+
+<script type="text/javascript">
+<!--
+function getValueYes<?php echo $i; ?>(){
+	$("#no<?php echo $i; ?>").fadeOut('slow');
+	document.getElementById('yes<?php echo $i; ?>').setAttribute("disabled","disabled");
+	var http = new XMLHttpRequest();
+	var url = "worker.php";
+	var params = "bali_ok=yes&device=<?php echo $row[information]; ?>&location=Bali&result=Good&date=<?php echo date('Y-m-d'); ?>&time=<?php echo date('H:i:s'); ?>";
+	http.open("GET", url+"?"+params, true);
+http.onreadystatechange = function() {//Call a function when the state changes.												
+}
+http.send(null);
+
+}						
+
+
+function getValueNo<?php echo $i; ?>(){
+	var retVal = prompt("Enter your reason : ");
+	if (retVal){
+		$("#yes<?php echo $i; ?>").fadeOut('slow');
+		document.getElementById('no<?php echo $i; ?>').setAttribute("disabled","disabled");
+		var http = new XMLHttpRequest();
+		var url = "worker.php";
+		var params = "bali_remove=yes&reason="+ retVal +"&device=<?php echo $row[information]; ?>&location=Bali&result=Bad&date=<?php echo date('Y-m-d'); ?>&time=<?php echo date('H:i:s'); ?>";
+		http.open("GET", url+"?"+params, true);
+		http.onreadystatechange = function() {//Call a function when the state changes.												
+		}
+	http.send(null);
+
+	}
+}	
